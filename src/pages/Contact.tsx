@@ -1,0 +1,93 @@
+import { useEffect, useRef, useState } from "react";
+import { EnvelopeIcon, LinkIcon } from "@heroicons/react/24/outline";
+
+const Contact = () => {
+  const sectionRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  return (
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="h-screen w-screen flex justify-center items-center text-center bg-white text-gray-900 px-6 sm:px-12"
+    >
+      <div className="max-w-3xl mx-auto">
+        <h2
+          className={`text-5xl font-bold tracking-tight mb-6 transition-all duration-1000 ${
+            hasAnimated
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+          style={{ transitionDelay: "0.2s" }}
+        >
+          Get in Touch
+        </h2>
+
+        <p
+          className={`text-lg text-gray-600 leading-relaxed transition-all duration-1000 ${
+            hasAnimated
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+          style={{ transitionDelay: "0.4s" }}
+        >
+          Got a question, a cool project idea, or just want to say hey? I’m
+          always up for a chat! Whether you’re looking to team up, need some
+          help with a project, or just want to talk tech, feel free to reach
+          out. My inbox is always open, and I’ll do my best to get back to you
+          as soon as I can!
+        </p>
+
+        <div
+          className={`mt-10 flex flex-col sm:flex-row justify-center gap-6 transition-all duration-1000 ${
+            hasAnimated
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+          style={{ transitionDelay: "0.6s" }}
+        >
+          <a
+            href="mailto:charliejt1992@hotmail.com"
+            className="inline-flex items-center gap-3 px-6 py-3 border border-teal-500 text-teal-600 rounded-md hover:bg-teal-500 hover:text-white transition duration-300"
+          >
+            <EnvelopeIcon className="h-5 w-5" />
+            charliejt1992@hotmail.com
+          </a>
+
+          <a
+            href="https://uk.linkedin.com/in/charlie-jeffries-tipton-720602173"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-6 py-3 border border-blue-500 text-blue-600 rounded-md hover:bg-blue-500 hover:text-white transition duration-300"
+          >
+            <LinkIcon className="h-5 w-5" />
+            LinkedIn Profile
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;

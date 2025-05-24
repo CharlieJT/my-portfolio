@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Poppins", sans-serif; /* Use Poppins as the font */
+    color: #333;
+    overflow-x: hidden;
+  }
+}
