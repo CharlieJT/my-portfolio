@@ -4,7 +4,7 @@ const Background = () => (
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
       style={{
-        backgroundImage: "url('./src/assets/portfolio-background-image.jpg')",
+        backgroundImage: "url('./src/assets/portfolio-background-image.png')",
       }}
     ></div>
   </>
