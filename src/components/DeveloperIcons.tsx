@@ -69,7 +69,7 @@ const DEV_LINKS = [
 ];
 
 const DeveloperIcons = () => (
-  <div className="flex gap-1 mt-6 flex-wrap justify-center lg:justify-start">
+  <div className="flex gap-1 mt-3 lg:mt-6 flex-wrap justify-center lg:justify-start">
     {DEV_LINKS.map((dev) => (
       <IconLink
         key={dev.id}
