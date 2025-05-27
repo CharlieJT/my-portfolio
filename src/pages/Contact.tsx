@@ -18,14 +18,14 @@ const Contact = () => {
         </Heading>
 
         <Text
-          className={`text-gray-600 leading-relaxed transition-all duration-1000 ${
+          className={`text-gray-600 leading-relaxed transition-all duration-1000 mt-8 ${
             hasAnimated
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           }`}
           style={{ transitionDelay: "0.4s" }}
         >
-          Got a question, a cool project idea, or just want to say hey? I’m
+          Got a question, a cool project idea, or just want to say hi? I’m
           always up for a chat! Whether you’re looking to team up, need some
           help with a project, or just want to talk tech, feel free to reach
           out. My inbox is always open, and I’ll do my best to get back to you

@@ -7,7 +7,7 @@ import useAnimation from "@hooks/useAnimation";
 const About = () => {
   const { ref: sectionRef, hasAnimated } = useAnimation();
 
-  const textClassName = ` transition-all duration-1000 mb-8 ${
+  const textClassName = ` transition-all duration-1000 mb-6 ${
     hasAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
   }`;
 
@@ -18,7 +18,7 @@ const About = () => {
       className="relative h-screen w-screen flex justify-center items-center text-center px-6 lg:px-12 bg-gradient-to-tr from-gray-900 via-gray-800 to-black text-gray-100"
     >
       {/* Content */}
-      <div className="relative max-w-6xl w-full mx-auto z-10 bg-gray-800 p-16  md:p-16 rounded-xl shadow-lg">
+      <div className="relative max-w-6xl w-full mx-auto z-10 bg-gray-800 p-8 md:p-16 rounded-xl shadow-lg">
         <Heading hasAnimated={hasAnimated}>About Me</Heading>
 
         {/* First Paragraph */}
