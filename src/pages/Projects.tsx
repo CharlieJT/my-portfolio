@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Modal from "@components/Modal";
 import snakeGameImage from "@assets/snake-game-image.png";
 import tetrisGameImage from "@assets/tetris-game-image.png";
