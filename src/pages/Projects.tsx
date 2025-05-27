@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import Modal from "../components/Modal";
-import snakeGameImage from "../assets/snake-game-image.png";
-import tetrisGameImage from "../assets/tetris-game-image.png";
-import simonMemoryGameImage from "../assets/simon-memory-game-image.png";
-import myWeatherAppImage from "../assets/my-weather-image.png";
+import Modal from "@components/Modal";
+import snakeGameImage from "@assets/snake-game-image.png";
+import tetrisGameImage from "@assets/tetris-game-image.png";
+import simonMemoryGameImage from "@assets/simon-memory-game-image.png";
+import myWeatherAppImage from "@assets/my-weather-image.png";
+import Heading from "@UI/Heading";
+import Text from "@UI/Text";
+import useAnimation from "@hooks/useAnimation";
 
 type Project = {
   id: number;
@@ -101,31 +104,9 @@ const ProjectLink = ({ link, name }: { link: string; name: string }) => (
 );
 
 const Projects = () => {
-  const sectionRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const { ref: sectionRef, hasAnimated } = useAnimation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([{ isIntersecting }]) => {
-        if (isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [hasAnimated]);
 
   return (
     <section
@@ -133,35 +114,16 @@ const Projects = () => {
       ref={sectionRef}
       className="min-h-screen py-24 w-screen flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
     >
-      {/* Title Section */}
-      <div
-        className={`text-center mb-12 transition-all duration-1000 ${
+      <Heading hasAnimated={hasAnimated}> My Projects</Heading>
+
+      <p
+        className={`my-6 text-center transition-all duration-1000 ${
           hasAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
-        style={{ transitionDelay: "0.2s" }}
+        style={{ transitionDelay: "0.4s" }}
       >
-        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-wide">
-          My Projects
-        </h2>
-        {/* Divider */}
-        <div
-          className={`w-16 h-1 bg-primary mx-auto mt-4 transition-all duration-1000 ${
-            hasAnimated ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-          }`}
-          style={{ transitionDelay: "0.3s" }}
-        ></div>
-
-        <p
-          className={`mt-4 text-lg text-gray-300 transition-all duration-1000 ${
-            hasAnimated
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          }`}
-          style={{ transitionDelay: "0.4s" }}
-        >
-          Check out some of the work I've done.
-        </p>
-      </div>
+        Check out some of the work I've done.
+      </p>
 
       {/* Projects Grid */}
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-6xl">
@@ -185,7 +147,7 @@ const Projects = () => {
                 className="w-full h-48 object-cover rounded-xl mb-5 border border-gray-700"
               />
               <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-              <p className="mt-3 text-gray-400 text-sm leading-relaxed">
+              <Text className="mt-3 text-gray-400 leading-relaxed">
                 {project.description.length > 100 ? (
                   <>
                     {`${project.description.slice(0, 100)}... `}
@@ -199,7 +161,7 @@ const Projects = () => {
                 ) : (
                   project.description
                 )}
-              </p>
+              </Text>
               <div className="mt-5">
                 <h4 className="text-sm font-medium text-gray-300">
                   Technologies
@@ -243,9 +205,9 @@ const Projects = () => {
             <h3 className="text-2xl font-bold text-white">
               {selectedProject.title}
             </h3>
-            <p className="text-gray-300">
+            <Text className="text-gray-300">
               {selectedProject.detailedDescription}
-            </p>
+            </Text>
             <div className="flex flex-wrap gap-2 mt-4">
               {selectedProject.technologies.map((tech, i) => (
                 <span

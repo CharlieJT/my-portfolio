@@ -1,4 +1,4 @@
-import cvFile from "../assets/charlie-jeffries-tipton-cv.pdf";
+import cvFile from "@assets/charlie-jeffries-tipton-cv.pdf";
 
 const DownloadCvButton = () => (
   <a

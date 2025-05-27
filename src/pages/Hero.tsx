@@ -1,7 +1,7 @@
-import SocialIcons from "../components/SocialIcons";
-import Background from "../components/Background";
-import DownChevron from "../components/DownChevron";
-import MainContent from "../components/MainContent";
+import SocialIcons from "@components/SocialIcons";
+import Background from "@components/Background";
+import DownChevron from "@components/DownChevron";
+import MainContent from "@components/MainContent";
 
 const Hero = () => {
   return (

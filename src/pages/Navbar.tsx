@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import NavLinks from "../components/NavLinks";
-import SideDrawer from "../components/SideDrawer";
-import HamburgerIcon from "../components/HamburgerIcon";
+import HamburgerIcon from "@components/HamburgerIcon";
+import NavLinks from "@components/NavLinks";
+import SideDrawer from "@components/SideDrawer";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Check scroll position to add background effect to navbar
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -23,7 +22,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Close the drawer if the page width exceeds mobile breakpoint
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {

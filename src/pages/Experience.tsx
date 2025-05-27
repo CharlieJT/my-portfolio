@@ -1,35 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import NovunaImage from "../assets/novuna-image.png"; // Adjust the path if necessary
-import BoohooImage from "../assets/boohoo-image.png"; // Adjust the path if necessary
-import RKWImage from "../assets/rkw-image.png"; // Adjust the path if necessary
+import NovunaImage from "@assets/novuna-image.png";
+import BoohooImage from "@assets/boohoo-image.png";
+import RKWImage from "@assets/rkw-image.png";
+import Heading from "@UI/Heading";
+import useAnimation from "@hooks/useAnimation";
 
 const ExperienceTimeline = () => {
-  const sectionRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const { ref: sectionRef, hasAnimated } = useAnimation();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-    };
-  }, [hasAnimated]);
-
-  const jobs = [
+  const EMPLOYMENT_HISTORY = [
     {
       title: "Senior Developer",
       company: "Novuna",
       period: "December 2022 - Present",
-      image: NovunaImage, // Add image here
+      image: NovunaImage,
       summary:
         "At Novuna, I’m a Senior Developer working on the Mercury Project, helping build and enhance the company’s internal finance portal.",
       highlights: [
@@ -44,7 +27,7 @@ const ExperienceTimeline = () => {
       title: "React Developer",
       company: "Boohoo Group PLC",
       period: "February 2021 - December 2022",
-      image: BoohooImage, // Add image here
+      image: BoohooImage,
       summary:
         "Worked on both customer-facing websites and internal business tools using modern technologies including React.js, TypeScript, and GraphQL.",
       highlights: [
@@ -59,7 +42,7 @@ const ExperienceTimeline = () => {
       title: "Frontend Developer",
       company: "RKW Limited",
       period: "June 2019 - February 2021",
-      image: RKWImage, // Add image here
+      image: RKWImage,
       summary:
         "Focused on building and maintaining the frontend of the RKW website using ReactJS and Redux while collaborating with backend teams.",
       highlights: [
@@ -79,26 +62,13 @@ const ExperienceTimeline = () => {
       className="relative w-screen px-6 py-20 bg-gradient-to-tr from-gray-900 via-gray-800 to-black"
     >
       <div className="max-w-5xl mx-auto">
-        <h2
-          className={`text-4xl sm:text-5xl font-extrabold text-center text-white transition-all duration-1000 ${
-            hasAnimated
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          }`}
-        >
+        <Heading hasAnimated={hasAnimated} className="text-center">
           Employment History
-        </h2>
-        {/* Divider */}
-        <div
-          className={`w-16 h-1 bg-primary mx-auto mt-4 transition-all duration-1000 ${
-            hasAnimated ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-          }`}
-          style={{ transitionDelay: "0.3s" }}
-        ></div>
+        </Heading>
         <div className="mt-16 relative">
           <div className="absolute left-4 sm:left-[25px] top-0 w-0.5 bg-primary h-full z-0 rounded-full"></div>
           <div className="space-y-16 pl-12 sm:pl-20">
-            {jobs.map((job, index) => (
+            {EMPLOYMENT_HISTORY.map((job, index) => (
               <div
                 key={index}
                 className={`relative transition-all duration-1000 ${

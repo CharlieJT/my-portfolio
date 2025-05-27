@@ -1,6 +1,8 @@
 import { Typed } from "react-typed";
-import DeveloperIcons from "../components/DeveloperIcons";
+import DeveloperIcons from "@components/DeveloperIcons";
+import Text from "@UI/Text";
 import { CgChevronDown } from "react-icons/cg";
+import ButtonLink from "@UI/ButtonLink";
 
 const MainText = () => (
   <>
@@ -34,8 +36,8 @@ const MainText = () => (
           ></span>
         </span>
       </h2>
-      <p
-        className="mt-2 lg:mt-4 text-[0.7rem] sm:text-sm lg:text-base max-w-md lg:max-w-lg opacity-0 animate-fade-in-up z-10"
+      <Text
+        className="max-w-md lg:max-w-lg opacity-0 animate-fade-in-up z-10"
         style={{ animationDelay: "0.6s" }}
       >
         I'm a UK-based Senior Developer with 7+ years of experience,
@@ -44,20 +46,11 @@ const MainText = () => (
         designs, integrated APIs seamlessly, and worked with stacks using
         Next.js, AWS (Serverless, Lambda, API Gateway), REST & GraphQL. I have
         also used CSS libraries such as Bootstrap, Tailwind & MUI.
-      </p>
+      </Text>
       <DeveloperIcons />
-      <a
-        href="#about"
-        className="inline-block bg-primary text-gray-800 font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-primary hover:shadow-lg transition duration-200 opacity-0 animate-bounce-in z-10 text-sm sm:text-base mt-4"
-        style={{
-          animationDelay: "0.8s",
-          animationFillMode: "forwards",
-        }}
-      >
-        <span className="flex items-center gap-2 text-base sm:text-lg">
-          See more <CgChevronDown className="w-6 h-6 sm:w-8 sm:h-8" />
-        </span>
-      </a>
+      <ButtonLink href="#about">
+        See more <CgChevronDown className="w-6 h-6 sm:w-8 sm:h-8" />
+      </ButtonLink>
     </div>
   </>
 );

@@ -1,4 +1,4 @@
-import portfolioImage from "../assets/portfolio-image.png";
+import portfolioImage from "@assets/portfolio-image.png";
 
 const MainImage = () => (
   <div

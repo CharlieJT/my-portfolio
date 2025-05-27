@@ -1,30 +1,10 @@
-import { useEffect, useRef, useState } from "react";
 import { EnvelopeIcon, LinkIcon } from "@heroicons/react/24/outline";
+import useAnimation from "@hooks/useAnimation";
+import Heading from "@UI/Heading";
+import Text from "@UI/Text";
 
 const Contact = () => {
-  const sectionRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [hasAnimated]);
+  const { ref: sectionRef, hasAnimated } = useAnimation();
 
   return (
     <section
@@ -33,19 +13,12 @@ const Contact = () => {
       className="h-screen w-screen flex justify-center items-center text-center bg-white text-gray-900 px-6 sm:px-12"
     >
       <div className="max-w-3xl mx-auto">
-        <h2
-          className={`text-5xl font-bold tracking-tight mb-6 transition-all duration-1000 ${
-            hasAnimated
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          }`}
-          style={{ transitionDelay: "0.2s" }}
-        >
+        <Heading hasAnimated={hasAnimated} style={{ color: "#111827" }}>
           Get in Touch
-        </h2>
+        </Heading>
 
-        <p
-          className={`text-lg text-gray-600 leading-relaxed transition-all duration-1000 ${
+        <Text
+          className={`text-gray-600 leading-relaxed transition-all duration-1000 ${
             hasAnimated
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
@@ -57,7 +30,7 @@ const Contact = () => {
           help with a project, or just want to talk tech, feel free to reach
           out. My inbox is always open, and I’ll do my best to get back to you
           as soon as I can!
-        </p>
+        </Text>
 
         <div
           className={`mt-10 flex flex-col sm:flex-row justify-center gap-6 transition-all duration-1000 ${
