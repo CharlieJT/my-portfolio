@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Backdrop from "../UI/Backdrop";
 
 type ModalProps = {
   children: ReactNode;
@@ -7,34 +8,49 @@ type ModalProps = {
   onClose: () => void;
 };
 
+const TRANSITION_DURATION = 200; // ms, match with your Tailwind duration
+
 const Modal = ({ children, isOpen, onClose }: ModalProps) => {
-  if (!isOpen) return null;
+  const [rendered, setRendered] = useState(isOpen);
+
+  useEffect(() => {
+    if (isOpen) {
+      setRendered(true);
+    } else {
+      const timeout = setTimeout(() => setRendered(false), TRANSITION_DURATION);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
 
   const modalRoot = document.getElementById("modal");
-  if (!modalRoot) {
-    console.error("Modal root element with ID 'modal' not found.");
-    return null;
-  }
+  if (!modalRoot || !rendered) return null;
 
   return createPortal(
-    <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out"
-      onClick={onClose}
-    >
+    <>
+      <Backdrop isOpen={isOpen} closeDrawerOnBackdropClick={onClose} />
       <div
-        className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full relative animate-modal-slide-up"
-        onClick={(e) => e.stopPropagation()}
+        className={`fixed inset-0 flex justify-center items-center z-50 transition-opacity duration-200  animate-modal-slide-up ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200"
-          aria-label="Close Modal"
+        <div
+          className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full relative z-50 animate-modal-slide-up"
+          onClick={(e) => e.stopPropagation()}
         >
-          ✕
-        </button>
-        {children}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-200"
+            aria-label="Close Modal"
+          >
+            ✕
+          </button>
+          {children}
+        </div>
       </div>
-    </div>,
+    </>,
     modalRoot
   );
 };

@@ -75,20 +75,12 @@ const Navbar = () => {
         />
         <HamburgerIcon toggleDrawer={toggleDrawer} />
       </div>
-
-      {/* Backdrop that closes the drawer when clicked */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
-          onClick={closeDrawerOnBackdropClick}
-        />
-      )}
-
       {/* Side Drawer */}
       <SideDrawer
         isOpen={isOpen}
         toggleDrawer={toggleDrawer}
         navigateToSection={navigateToSection}
+        closeDrawerOnBackdropClick={closeDrawerOnBackdropClick}
       />
     </nav>
   );

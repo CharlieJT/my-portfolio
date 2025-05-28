@@ -198,7 +198,7 @@ const Projects = () => {
       {/* Modal */}
       <Modal
         isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={() => setTimeout(() => setSelectedProject(null), 200)}
       >
         {selectedProject && (
           <div className="space-y-4">
