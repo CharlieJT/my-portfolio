@@ -8,7 +8,7 @@ type ModalProps = {
   onClose: () => void;
 };
 
-const TRANSITION_DURATION = 200; // ms, match with your Tailwind duration
+const TRANSITION_DURATION = 200;
 
 const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   const [rendered, setRendered] = useState(isOpen);
