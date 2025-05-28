@@ -9,6 +9,14 @@ type IconLinkProps = {
   className?: string;
 };
 
+const colourClassMap: Record<string, string> = {
+  orange: "text-orange-400",
+  blue: "text-blue-400",
+  yellow: "text-yellow-400",
+  green: "text-green-400",
+  gray: "text-gray-400",
+};
+
 const IconLink = ({
   IconComponent,
   text,
@@ -28,7 +36,7 @@ const IconLink = ({
     style={{ ...style, animationDelay: style?.animationDelay ?? "0s" }}
   >
     <IconComponent
-      className={`text-base sm:text-xl text-${colour ?? "gray"}-400`}
+      className={`text-base sm:text-xl ${colourClassMap[colour ?? "gray"]}`}
     />
     <span className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition duration-200">
       {text}
