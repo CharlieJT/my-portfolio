@@ -112,7 +112,7 @@ const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="min-h-screen py-24 w-screen flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
+      className="min-h-screen py-24 w-screen z-10 flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
     >
       <Heading hasAnimated={hasAnimated}> My Projects</Heading>
 

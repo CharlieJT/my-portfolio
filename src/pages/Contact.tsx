@@ -10,7 +10,7 @@ const Contact = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="h-screen w-screen flex justify-center items-center text-center bg-white text-gray-900 px-6 sm:px-12"
+      className="h-screen w-screen z-10 flex justify-center items-center text-center bg-white text-gray-900 px-6 sm:px-12"
     >
       <div className="max-w-3xl mx-auto">
         <Heading hasAnimated={hasAnimated} style={{ color: "#111827" }}>
