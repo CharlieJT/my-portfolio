@@ -7,6 +7,7 @@ import myWeatherAppImage from "@assets/my-weather-image.png";
 import Heading from "@UI/Heading";
 import Text from "@UI/Text";
 import useAnimation from "@hooks/useAnimation";
+import { FaFolderOpen } from "react-icons/fa";
 
 type Project = {
   id: number;
@@ -114,6 +115,13 @@ const Projects = () => {
       ref={sectionRef}
       className="min-h-screen py-24 w-screen z-10 flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
     >
+      <FaFolderOpen
+        className={`mx-auto mb-4 text-primary transition-all duration-1000 ${
+          hasAnimated ? "opacity-100 scale-100" : "opacity-0 scale-75"
+        }`}
+        size={56}
+        style={{ transitionDelay: "0.1s" }}
+      />
       <Heading hasAnimated={hasAnimated}> My Projects</Heading>
 
       <p

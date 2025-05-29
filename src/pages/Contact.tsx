@@ -13,6 +13,14 @@ const Contact = () => {
       className="h-screen w-screen z-10 flex justify-center items-center text-center bg-white text-gray-900 px-6 sm:px-12"
     >
       <div className="max-w-3xl mx-auto">
+        <EnvelopeIcon
+          className={`mx-auto mb-4 text-primary transition-all duration-1000 ${
+            hasAnimated ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+          style={{ transitionDelay: "0.1s" }}
+          height={56}
+          width={56}
+        />
         <Heading hasAnimated={hasAnimated} style={{ color: "#111827" }}>
           Get in Touch
         </Heading>

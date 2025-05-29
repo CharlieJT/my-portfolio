@@ -1,3 +1,4 @@
+import { FaUserCircle } from "react-icons/fa";
 import ButtonLink from "@UI/ButtonLink";
 import { CgChevronDown } from "react-icons/cg";
 import Text from "@UI/Text";
@@ -19,6 +20,13 @@ const About = () => {
     >
       {/* Content */}
       <div className="relative max-w-6xl w-full mx-auto z-10 bg-gray-800 p-8 md:p-16 rounded-xl shadow-lg">
+        <FaUserCircle
+          className={`mx-auto mb-4 text-primary transition-all duration-1000 ${
+            hasAnimated ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+          size={56}
+          style={{ transitionDelay: "0.1s" }}
+        />
         <Heading hasAnimated={hasAnimated}>About Me</Heading>
 
         {/* First Paragraph */}

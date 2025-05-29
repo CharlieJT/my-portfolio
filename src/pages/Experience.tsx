@@ -4,6 +4,7 @@ import RKWImage from "@assets/rkw-image.png";
 import Heading from "@UI/Heading";
 import useAnimation from "@hooks/useAnimation";
 import Text from "@UI/Text";
+import { FaBriefcase } from "react-icons/fa";
 
 const ExperienceTimeline = () => {
   const { ref: sectionRef, hasAnimated } = useAnimation();
@@ -63,6 +64,13 @@ const ExperienceTimeline = () => {
       className="relative w-screen px-6 py-20 bg-gradient-to-tr from-gray-900 via-gray-800 to-black"
     >
       <div className="max-w-5xl mx-auto">
+        <FaBriefcase
+          className={`mx-auto mb-4 text-primary transition-all duration-1000 ${
+            hasAnimated ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+          size={56}
+          style={{ transitionDelay: "0.1s" }}
+        />
         <Heading hasAnimated={hasAnimated} className="text-center">
           Employment History
         </Heading>
