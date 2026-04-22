@@ -24,6 +24,14 @@ const ExperienceTimeline = () => {
         "Optimized performance for a smoother user experience.",
         "Improved internal tools to boost efficiency.",
       ],
+      technologies: [
+        "React",
+        "TypeScript",
+        "GraphQL",
+        "AWS",
+        "Jest",
+        "Tailwind CSS",
+      ],
     },
     {
       title: "React Developer",
@@ -38,6 +46,15 @@ const ExperienceTimeline = () => {
         "Reviewed code to ensure high-quality standards.",
         "Contributed to Boohoo’s internal supplier hub.",
         "Worked across React, Redux, Node.js, and MongoDB.",
+      ],
+      technologies: [
+        "React",
+        "TypeScript",
+        "Redux",
+        "Node.js",
+        "MongoDB",
+        "Jest",
+        "Cypress",
       ],
     },
     {
@@ -54,6 +71,14 @@ const ExperienceTimeline = () => {
         "Ensured full frontend-backend integration.",
         "Gained deep expertise in web fundamentals.",
       ],
+      technologies: [
+        "React",
+        "Redux",
+        "JavaScript",
+        "REST APIs",
+        "CSS",
+        "HTML",
+      ],
     },
   ];
 
@@ -61,7 +86,7 @@ const ExperienceTimeline = () => {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-screen px-6 py-20 bg-gradient-to-tr from-gray-900 via-gray-800 to-black"
+      className="relative w-full px-6 py-20 bg-gradient-to-tr from-gray-900 via-gray-800 to-black"
     >
       <div className="max-w-5xl mx-auto">
         <FaBriefcase
@@ -79,8 +104,16 @@ const ExperienceTimeline = () => {
           <div className="space-y-16 pl-12 sm:pl-20">
             {EMPLOYMENT_HISTORY.map(
               (
-                { image, title, company, period, highlights, summary },
-                index
+                {
+                  image,
+                  title,
+                  company,
+                  period,
+                  highlights,
+                  summary,
+                  technologies,
+                },
+                index,
               ) => (
                 <div
                   key={index}
@@ -89,7 +122,11 @@ const ExperienceTimeline = () => {
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-10"
                   }`}
-                  style={{ transitionDelay: `${0.3 + index * 0.2}s` }}
+                  style={{
+                    transitionDelay: hasAnimated
+                      ? "0ms"
+                      : `${0.3 + index * 0.2}s`,
+                  }}
                 >
                   <div
                     className="absolute -left-[52px] sm:-left-[93px] top-[40%] w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-cover bg-center border-4 border-primary shadow-md z-10"
@@ -102,8 +139,8 @@ const ExperienceTimeline = () => {
                       style={{ top: "50%" }}
                     ></div>
                   </div>
-                  <div className="p-[2px] rounded-xl bg-gradient-to-r from-primary via-blue-300 to-primary">
-                    <div className="bg-gradient-to-bl from-gray-900 via-gray-800 to-gray-900 p-6 rounded-xl shadow-md">
+                  <div className="group p-[2px] rounded-xl bg-gradient-to-r from-primary via-blue-300 to-primary hover:shadow-primary-lg transition-all duration-300">
+                    <div className="bg-gradient-to-bl from-gray-900 via-gray-800 to-gray-900 p-6 rounded-xl shadow-md transition-transform duration-300">
                       <div className="flex items-center space-x-4">
                         <div>
                           <h3 className="text-xl font-semibold text-white">
@@ -125,10 +162,21 @@ const ExperienceTimeline = () => {
                           </li>
                         ))}
                       </ul>
+                      {/* Technology badges */}
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {technologies.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="bg-gray-800 border border-gray-600 text-gray-300 text-xs px-3 py-1 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>

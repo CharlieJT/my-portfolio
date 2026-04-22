@@ -10,6 +10,7 @@ export default {
       },
       boxShadow: {
         primary: "0 0px 20px -1px rgba(29, 161, 242, 0.5)",
+        "primary-lg": "0 0px 40px 0px rgba(29, 161, 242, 0.4)",
         imagePrimary: "0 0px 30px 5px rgba(29, 161, 242, 0.5)",
       },
       fontFamily: {
@@ -24,6 +25,11 @@ export default {
         "rise-up": "riseUp 0.7s ease-out forwards",
         "modal-slide-up": "modalSlideUp 0.3s ease-out",
         "modal-slide-down": "modalSlideDown 0.3s ease-in",
+        "pulse-glow": "pulseGlow 3s ease-in-out infinite",
+        "pulse-glow-delayed": "pulseGlow 3s ease-in-out 1.5s infinite",
+        "skill-fill": "skillFill 1.2s ease-out forwards",
+        float: "float 6s ease-in-out infinite",
+        shimmer: "shimmer 2s linear infinite",
       },
       keyframes: {
         floatIn: {
@@ -58,6 +64,22 @@ export default {
         modalSlideDown: {
           "0%": { opacity: "1", transform: "translateY(0)" },
           "100%": { opacity: "0", transform: "translateY(20px)" },
+        },
+        pulseGlow: {
+          "0%, 100%": { opacity: "0.4", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
+        },
+        skillFill: {
+          "0%": { width: "0%" },
+          "100%": { width: "var(--skill-level)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
     },

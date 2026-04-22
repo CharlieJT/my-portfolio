@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative text-white h-screen w-screen flex justify-center items-center text-center px-6 lg:px-12 font-sans"
+      className="relative text-white h-screen w-full flex justify-center items-center text-center px-6 lg:px-12 font-sans"
     >
       <Background />
       <MainContent />

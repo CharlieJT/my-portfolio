@@ -9,9 +9,10 @@ type NavLinksProps = {
 const NAV_LINKS = [
   { id: 1, text: "home", label: "Home" },
   { id: 2, text: "about", label: "About" },
+  { id: 3, text: "tech-stack", label: "Tech Stack" },
   { id: 4, text: "projects", label: "Projects" },
-  { id: 3, text: "experience", label: "Experience" },
-  { id: 5, text: "contact", label: "Contact" },
+  { id: 5, text: "experience", label: "Experience" },
+  { id: 6, text: "contact", label: "Contact" },
 ];
 
 const NavLinks = ({ className, navigateToSection }: NavLinksProps) => (

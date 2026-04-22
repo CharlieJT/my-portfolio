@@ -57,8 +57,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-black bg-opacity-70 h-12" : "bg-transparent h-16"
+      className={`fixed top-0 left-0 w-full z-[110] transition-all duration-300 ${
+        isScrolled ? "bg-black/70 backdrop-blur-md h-12" : "bg-transparent h-16"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-full">
@@ -67,10 +67,10 @@ const Navbar = () => {
           className="text-2xl font-bold text-white cursor-pointer"
           onClick={() => navigateToSection("home")}
         >
-          My Portfolio
+          CJT<span className="text-primary">.</span>
         </div>
         <NavLinks
-          className="hidden md:flex space-x-6 text-white"
+          className="hidden md:flex space-x-6 text-white text-sm font-medium"
           navigateToSection={navigateToSection}
         />
         <HamburgerIcon toggleDrawer={toggleDrawer} />

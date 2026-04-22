@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type React from "react";
 import Modal from "@components/Modal";
 import snakeGameImage from "@assets/snake-game-image.png";
 import tetrisGameImage from "@assets/tetris-game-image.png";
 import simonMemoryGameImage from "@assets/simon-memory-game-image.png";
 import myWeatherAppImage from "@assets/my-weather-image.png";
+import virtualRubiksCubeImage from "@assets/virtual-rubiks-cube.png";
 import Heading from "@UI/Heading";
 import Text from "@UI/Text";
 import useAnimation from "@hooks/useAnimation";
-import { FaFolderOpen } from "react-icons/fa";
+import { FaFolderOpen, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 type Project = {
   id: number;
@@ -23,23 +25,15 @@ type Project = {
 const projects: Project[] = [
   {
     id: 1,
-    title: "MyWeather App",
+    title: "Virtual Rubik's Cube",
     description:
-      "MyWeather is a React app using Redux and OpenWeather API to display current and weekly forecasts, with Chart.js graphs, reusable components, and responsive Bootstrap styling",
+      "An interactive 3D Rubik's Cube simulator built with Three.js, featuring realistic rotations, smooth animations, and intuitive mouse/touch controls for a fully immersive solving experience.",
     detailedDescription:
-      "MyWeather is a responsive weather application built with React and Redux using ES6 JavaScript. Users can search by city and country to view current weather conditions, a 7-day forecast, and a detailed hourly graph for temperature and wind speed using Chart.js. The app features reusable components, Redux state management, and a clean UI with Bootstrap styling. Data is sourced from the OpenWeather API, with support for metric and imperial units. While overengineered for its scope, the project demonstrates scalable architecture, reusable utilities, and thoughtful UX.",
-    link: "https://github.com/CharlieJT/myWeather",
-    demo: "https://charlie-jt-my-weather.netlify.app/",
-    technologies: [
-      "React",
-      "Redux",
-      "JavaScript",
-      "CSS",
-      "HTML",
-      "Chart.js",
-      "Bootstrap",
-    ],
-    image: myWeatherAppImage,
+      "A fully interactive 3D Rubik's Cube application that brings the classic puzzle into the browser. Built with React, TypeScript, and Three.js, the cube features realistic face rotations with smooth, physics-inspired animations. Users can manipulate the cube using intuitive drag controls on both desktop and mobile. The app includes a scramble function that randomises the cube state, and each move is visually fluid with precise 3D transformations. Styled with Tailwind CSS for a clean, modern interface that lets the 3D experience take centre stage. Demonstrates advanced 3D rendering, state management for complex spatial transformations, and polished UX design.",
+    link: "https://github.com/CharlieJT/virtual-rubiks-cube",
+    demo: "https://virtual-rubiks-cube.netlify.app/",
+    technologies: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
+    image: virtualRubiksCubeImage,
   },
   {
     id: 2,
@@ -62,6 +56,26 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    title: "MyWeather App",
+    description:
+      "MyWeather is a React app using Redux and OpenWeather API to display current and weekly forecasts, with Chart.js graphs, reusable components, and responsive Bootstrap styling",
+    detailedDescription:
+      "MyWeather is a responsive weather application built with React and Redux using ES6 JavaScript. Users can search by city and country to view current weather conditions, a 7-day forecast, and a detailed hourly graph for temperature and wind speed using Chart.js. The app features reusable components, Redux state management, and a clean UI with Bootstrap styling. Data is sourced from the OpenWeather API, with support for metric and imperial units. While overengineered for its scope, the project demonstrates scalable architecture, reusable utilities, and thoughtful UX.",
+    link: "https://github.com/CharlieJT/myWeather",
+    demo: "https://charlie-jt-my-weather.netlify.app/",
+    technologies: [
+      "React",
+      "Redux",
+      "JavaScript",
+      "CSS",
+      "HTML",
+      "Chart.js",
+      "Bootstrap",
+    ],
+    image: myWeatherAppImage,
+  },
+  {
+    id: 4,
     title: "Snake Game",
     description:
       "A nostalgic React-based Snake game inspired by the classic Nokia 5110, featuring simple controls, retro design, and high score tracking.",
@@ -80,7 +94,7 @@ const projects: Project[] = [
     image: snakeGameImage,
   },
   {
-    id: 4,
+    id: 5,
     title: "Simon Memory Game",
     description:
       "Simon Game is a classic memory challenge from 1978, featuring colorful buttons, fun sounds, a strict mode for extra difficulty, and a win condition for an engaging, rewarding experience for all ages",
@@ -93,13 +107,22 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectLink = ({ link, name }: { link: string; name: string }) => (
+const ProjectLink = ({
+  link,
+  name,
+  icon: Icon,
+}: {
+  link: string;
+  name: string;
+  icon: React.ElementType;
+}) => (
   <a
     href={link}
     target="_blank"
     rel="noopener noreferrer"
-    className="text-blue-400 hover:underline"
+    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 border border-gray-600 text-gray-300 text-xs font-medium hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-200"
   >
+    <Icon size={13} />
     {name}
   </a>
 );
@@ -108,12 +131,23 @@ const Projects = () => {
   const { ref: sectionRef, hasAnimated } = useAnimation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [visibleExtras, setVisibleExtras] = useState(false);
+
+  useEffect(() => {
+    if (showAllProjects) {
+      // slight delay so the DOM nodes mount before the fade kicks in
+      const t = setTimeout(() => setVisibleExtras(true), 30);
+      return () => clearTimeout(t);
+    } else {
+      setVisibleExtras(false);
+    }
+  }, [showAllProjects]);
 
   return (
     <section
       id="projects"
       ref={sectionRef}
-      className="min-h-screen py-24 w-screen z-10 flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
+      className="min-h-screen py-24 w-full z-10 flex flex-col justify-center items-center px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
     >
       <FaFolderOpen
         className={`mx-auto mb-4 text-primary transition-all duration-1000 ${
@@ -122,7 +156,7 @@ const Projects = () => {
         size={56}
         style={{ transitionDelay: "0.1s" }}
       />
-      <Heading hasAnimated={hasAnimated}> My Projects</Heading>
+      <Heading hasAnimated={hasAnimated}>My Projects</Heading>
 
       <p
         className={`my-6 text-center transition-all duration-1000 ${
@@ -135,73 +169,107 @@ const Projects = () => {
 
       {/* Projects Grid */}
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-6xl">
-        {projects
-          .slice(0, showAllProjects ? projects.length : 2)
-          .map((project, index) => (
+        {projects.map((project, index) => {
+          const isExtra = index >= 2;
+          return (
             <div
               key={index}
-              className={`bg-gray-900 border border-gray-700 p-6 rounded-2xl shadow-lg hover:shadow-xl transform transition duration-300 ease-in-out ${
-                hasAnimated
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
+              className={`relative flex flex-col bg-gray-900 rounded-2xl shadow-lg overflow-hidden ${
+                isExtra
+                  ? `${
+                      showAllProjects ? "block" : "hidden"
+                    } transition-all duration-700 ease-out ${
+                      visibleExtras
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-10"
+                    }`
+                  : hasAnimated
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
               }`}
               style={{
-                transitionDelay: `${0.2 * index + 0.5}s`,
+                transitionDelay: isExtra
+                  ? `${(index - 2) * 0.12}s`
+                  : hasAnimated
+                    ? "0ms"
+                    : `${0.2 * index + 0.5}s`,
               }}
             >
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-48 object-cover rounded-xl mb-5 border border-gray-700"
-              />
-              <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-              <Text className="mt-3 text-gray-400 leading-relaxed">
-                {project.description.length > 100 ? (
-                  <>
-                    {`${project.description.slice(0, 100)}... `}
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="text-primary hover:underline"
-                    >
-                      See More
-                    </button>
-                  </>
-                ) : (
-                  project.description
+              {/* Image with gradient fade */}
+              <div className="relative overflow-hidden h-52">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
+                {index === 0 && (
+                  <span className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-lg">
+                    Featured
+                  </span>
                 )}
-              </Text>
-              <div className="mt-5">
-                <h4 className="text-sm font-medium text-gray-300">
-                  Technologies
-                </h4>
-                <div className="flex flex-wrap gap-2 mt-2 min-h-[60px]">
+              </div>
+
+              {/* Body */}
+              <div className="flex flex-col flex-1 px-6 pt-4 pb-6">
+                <h3 className="text-xl font-bold text-white">
+                  {project.title}
+                </h3>
+
+                <Text className="mt-2 text-gray-400 text-sm leading-relaxed flex-1">
+                  {project.description.length > 100 ? (
+                    <>
+                      {`${project.description.slice(0, 100)}... `}
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="text-primary hover:underline"
+                      >
+                        See More
+                      </button>
+                    </>
+                  ) : (
+                    project.description
+                  )}
+                </Text>
+
+                {/* Tech badges */}
+                <div className="flex flex-wrap gap-2 mt-4">
                   {project.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="bg-gray-800 border border-gray-600 text-gray-300 text-xs px-3 py-1 rounded-full h-7"
+                      className="bg-gray-800/80 border border-gray-700 text-gray-300 text-[11px] px-2.5 py-0.5 rounded-full"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </div>
-              <div className="mt-6 flex gap-4 text-sm">
-                <ProjectLink link={project.link} name="Github" />
-                <ProjectLink link={project.demo} name="Live Demo" />
+
+                {/* Links */}
+                <div className="mt-5 flex gap-3">
+                  <ProjectLink
+                    link={project.link}
+                    name="GitHub"
+                    icon={FaGithub}
+                  />
+                  <ProjectLink
+                    link={project.demo}
+                    name="Live Demo"
+                    icon={FaExternalLinkAlt}
+                  />
+                </div>
               </div>
             </div>
-          ))}
+          );
+        })}
       </div>
 
-      {/* Show More Button */}
-      {!showAllProjects && (
-        <button
-          onClick={() => setShowAllProjects(true)}
-          className="mt-6 text-primary hover:underline"
-        >
-          See More
-        </button>
-      )}
+      {/* Show More / See Less */}
+      <button
+        onClick={() => setShowAllProjects((prev) => !prev)}
+        className="mt-10 flex items-center gap-2 px-6 py-2.5 rounded-full border border-primary/50 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary transition-all duration-200"
+      >
+        {showAllProjects ? "See Less ↑" : "See More ↓"}
+      </button>
 
       {/* Modal */}
       <Modal
@@ -227,8 +295,16 @@ const Projects = () => {
               ))}
             </div>
             <div className="mt-6 flex gap-4 text-sm">
-              <ProjectLink link={selectedProject.link} name="Github" />
-              <ProjectLink link={selectedProject.demo} name="Live Demo" />
+              <ProjectLink
+                link={selectedProject.link}
+                name="GitHub"
+                icon={FaGithub}
+              />
+              <ProjectLink
+                link={selectedProject.demo}
+                name="Live Demo"
+                icon={FaExternalLinkAlt}
+              />
             </div>
           </div>
         )}
