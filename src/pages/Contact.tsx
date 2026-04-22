@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import {
   EnvelopeIcon,
@@ -35,9 +36,117 @@ const contactInfo = [
   },
 ];
 
+type FormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+type FormErrors = Partial<Record<keyof FormValues, string>>;
+
+const initialValues: FormValues = {
+  name: "",
+  email: "",
+  message: "",
+};
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const validateField = (field: keyof FormValues, value: string) => {
+  const trimmedValue = value.trim();
+
+  switch (field) {
+    case "name":
+      if (!trimmedValue) return "Please enter your name.";
+      if (trimmedValue.length < 2) {
+        return "Name must be at least 2 characters long.";
+      }
+      if (trimmedValue.length > 80) {
+        return "Name must be 80 characters or fewer.";
+      }
+      return "";
+    case "email":
+      if (!trimmedValue) return "Please enter your email address.";
+      if (!emailRegex.test(trimmedValue)) {
+        return "Please enter a valid email address.";
+      }
+      return "";
+    case "message":
+      if (!trimmedValue) return "Please enter a message.";
+      if (trimmedValue.length < 20) {
+        return "Message must be at least 20 characters long.";
+      }
+      if (trimmedValue.length > 2000) {
+        return "Message must be 2000 characters or fewer.";
+      }
+      return "";
+    default:
+      return "";
+  }
+};
+
+const validateForm = (values: FormValues): FormErrors => ({
+  name: validateField("name", values.name) || undefined,
+  email: validateField("email", values.email) || undefined,
+  message: validateField("message", values.message) || undefined,
+});
+
 const Contact = () => {
   const { ref: sectionRef, hasAnimated } = useAnimation();
   const [state, handleSubmit, reset] = useForm("xwvwbyzl");
+  const [formValues, setFormValues] = useState<FormValues>(initialValues);
+  const [touched, setTouched] = useState<Record<keyof FormValues, boolean>>({
+    name: false,
+    email: false,
+    message: false,
+  });
+
+  const errors = validateForm(formValues);
+  const isFormValid = !Object.values(errors).some(Boolean);
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target;
+    const field = name as keyof FormValues;
+
+    setFormValues((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleBlur = (
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const field = event.target.name as keyof FormValues;
+
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setTouched({
+      name: true,
+      email: true,
+      message: true,
+    });
+
+    const nextErrors = validateForm(formValues);
+    const hasErrors = Object.values(nextErrors).some(Boolean);
+
+    if (hasErrors) return;
+
+    await handleSubmit(event);
+  };
+
+  const handleReset = () => {
+    reset();
+    setFormValues(initialValues);
+    setTouched({
+      name: false,
+      email: false,
+      message: false,
+    });
+  };
 
   return (
     <section
@@ -144,7 +253,7 @@ const Contact = () => {
                   possible.
                 </p>
                 <button
-                  onClick={() => reset()}
+                  onClick={handleReset}
                   className="text-primary hover:underline text-sm"
                 >
                   Send another message
@@ -155,7 +264,7 @@ const Contact = () => {
                 <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
                   Send a Message
                 </h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleFormSubmit} noValidate className="space-y-5">
                   <div>
                     <label
                       htmlFor="name"
@@ -167,10 +276,23 @@ const Contact = () => {
                       id="name"
                       type="text"
                       name="name"
-                      required
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                      value={formValues.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={Boolean(touched.name && errors.name)}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      className={`w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors duration-200 ${
+                        touched.name && errors.name
+                          ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                          : "border-gray-600 focus:border-primary focus:ring-primary"
+                      }`}
                       placeholder="Your name"
                     />
+                    {touched.name && errors.name && (
+                      <p id="name-error" className="text-red-400 text-xs mt-1">
+                        {errors.name}
+                      </p>
+                    )}
                     <ValidationError
                       field="name"
                       prefix="Name"
@@ -190,10 +312,23 @@ const Contact = () => {
                       id="email"
                       type="email"
                       name="email"
-                      required
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                      value={formValues.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={Boolean(touched.email && errors.email)}
+                      aria-describedby={errors.email ? "email-error" : undefined}
+                      className={`w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors duration-200 ${
+                        touched.email && errors.email
+                          ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                          : "border-gray-600 focus:border-primary focus:ring-primary"
+                      }`}
                       placeholder="your@email.com"
                     />
+                    {touched.email && errors.email && (
+                      <p id="email-error" className="text-red-400 text-xs mt-1">
+                        {errors.email}
+                      </p>
+                    )}
                     <ValidationError
                       field="email"
                       prefix="Email"
@@ -213,10 +348,30 @@ const Contact = () => {
                       id="message"
                       name="message"
                       rows={5}
-                      required
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200 resize-none"
+                      value={formValues.message}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={Boolean(touched.message && errors.message)}
+                      aria-describedby={errors.message ? "message-error" : undefined}
+                      className={`w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors duration-200 resize-none ${
+                        touched.message && errors.message
+                          ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                          : "border-gray-600 focus:border-primary focus:ring-primary"
+                      }`}
                       placeholder="What would you like to say?"
                     />
+                    <div className="mt-1 flex items-center justify-between gap-3">
+                      {touched.message && errors.message ? (
+                        <p id="message-error" className="text-red-400 text-xs">
+                          {errors.message}
+                        </p>
+                      ) : (
+                        <span />
+                      )}
+                      <span className="text-xs text-gray-500">
+                        {formValues.message.trim().length}/2000
+                      </span>
+                    </div>
                     <ValidationError
                       field="message"
                       prefix="Message"
@@ -257,6 +412,11 @@ const Contact = () => {
                       "Send Message"
                     )}
                   </button>
+                  {!isFormValid && Object.values(touched).some(Boolean) && (
+                    <p className="text-xs text-red-400 text-center">
+                      Please fix the highlighted fields before sending your message.
+                    </p>
+                  )}
                 </form>
               </>
             )}
